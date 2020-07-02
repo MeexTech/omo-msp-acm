@@ -13,7 +13,7 @@ service MenuService {
 }
 
 enum PermissionAction {
-  Unknown = 0;
+  All = 0;
   Get = 1;
   Post = 2;
   Put = 3;
