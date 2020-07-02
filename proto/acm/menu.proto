@@ -1,0 +1,57 @@
+syntax = "proto3";
+
+package omo.msp.acm;
+option go_package= "omo.msp.acm";
+import "proto/acm/common.proto";
+
+service MenuService {
+  rpc AddOne(ReqMenuAdd) returns (ReplyMenuInfo) {}
+  rpc GetOne(RequestInfo) returns (ReplyMenuInfo) {}
+  rpc RemoveOne(RequestInfo) returns (ReplyInfo) {}
+  rpc GetAll(RequestInfo) returns (ReplyMenuList) {}
+  rpc UpdateBase(ReqMenuUpdate) returns (ReplyMenuInfo) {}
+}
+
+enum PermissionAction {
+  Unknown = 0;
+  Get = 1;
+  Post = 2;
+  Put = 3;
+  Delete = 4;
+}
+
+message MenuInfo {
+  string uid = 1;
+  uint64 id = 2;
+  int64 created = 3;
+  int64 updated = 4;
+  string name = 5;
+  string type = 6;
+  string path = 7;
+  PermissionAction method = 8;
+}
+
+message ReqMenuAdd {
+  string name = 1;
+  string type = 2;
+  string path = 3;
+  PermissionAction method = 4;
+}
+
+message ReplyMenuInfo {
+  MenuInfo info = 1;
+  ResultStatus status = 2;
+}
+
+message ReplyMenuList {
+  int32 number = 1;
+  repeated MenuInfo list = 2;
+}
+
+message ReqMenuUpdate {
+  string uid = 1;
+  string name = 2;
+  string type = 3;
+  string path = 4;
+  PermissionAction method = 5;
+}

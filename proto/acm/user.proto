@@ -1,0 +1,63 @@
+syntax = "proto3";
+
+package omo.msp.acm;
+option go_package= "omo.msp.acm";
+import "proto/acm/common.proto";
+
+service UserService {
+  rpc AddOne(ReqUserAdd) returns (ReplyUserLink) {}
+  rpc GetOne(RequestInfo) returns (ReplyUserLink) {}
+  rpc RemoveOne(RequestInfo) returns (ReplyInfo) {}
+  rpc GetList(ReqUserList) returns (ReplyUserList) {}
+  rpc IsPermission(ReqUserPermission) returns (ReplyUserPermission) {}
+  rpc AppendRole(ReqLinkRole) returns (ReplyLinkRole) {}
+  rpc SubtractRole(ReqLinkRole) returns (ReplyLinkRole) {}
+}
+
+message UserLink {
+  string uid = 1;
+  string user = 2;
+  repeated string roles = 3;
+}
+
+message ReqUserAdd {
+  string user = 1;
+  repeated string roles = 2;
+}
+
+message ReplyUserLink {
+  UserLink info = 1;
+  ResultStatus status = 2;
+}
+
+message ReqUserList {
+  int32 page = 1;
+  int32 number = 2;
+}
+
+message ReplyUserList {
+  repeated UserLink users = 1;
+}
+
+message ReplyUserPermission {
+  string user = 1;
+  bool permission = 2;
+  ResultStatus status = 3;
+}
+
+message ReqUserPermission {
+  string user = 1;
+  string path = 2;
+  string action = 3;
+}
+
+message ReqLinkRole {
+  string user = 1;
+  string role = 2;
+}
+
+message ReplyLinkRole {
+  string user = 1;
+  repeated string roles = 2;
+  ResultStatus status = 3;
+}

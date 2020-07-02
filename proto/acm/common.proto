@@ -1,0 +1,22 @@
+syntax = "proto3";
+
+package omo.msp.acm;
+option go_package= "omo.msp.acm";
+
+enum ResultStatus {
+  Success = 0;
+  MaxLimit = 1;
+  Repeated = 2;
+  NotExisted = 3;
+  DBException = 4;
+  Empty = 5;
+}
+
+message RequestInfo {
+  string uid = 1;
+}
+
+message ReplyInfo {
+  string uid = 1;
+  ResultStatus status = 2;
+}

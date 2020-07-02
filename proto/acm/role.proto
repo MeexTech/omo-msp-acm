@@ -1,0 +1,58 @@
+syntax = "proto3";
+
+package omo.msp.acm;
+option go_package= "omo.msp.acm";
+import "proto/acm/common.proto";
+
+service RoleService {
+  rpc AddOne(ReqRoleAdd) returns (ReplyRoleInfo) {}
+  rpc GetOne(RequestInfo) returns (ReplyRoleInfo) {}
+  rpc RemoveOne(RequestInfo) returns (ReplyInfo) {}
+  rpc GetAll(RequestInfo) returns (ReplyRoleList) {}
+  rpc UpdateBase(ReqRoleUpdate) returns (ReplyRoleInfo) {}
+  rpc AppendMenu(ReqRoleMenu) returns (ReplyRoleMenu) {}
+  rpc SubtractMenu(ReqRoleMenu) returns (ReplyRoleMenu) {}
+}
+
+message RoleInfo {
+  string uid = 1;
+  uint64 id = 2;
+  int64 created = 3;
+  int64 updated = 4;
+  string name = 5;
+  string remark = 6;
+  repeated string menus = 7;
+}
+
+message ReqRoleAdd {
+  string name = 1;
+  string remark = 2;
+  repeated string menus = 3;
+}
+
+message ReplyRoleInfo {
+  RoleInfo info = 1;
+  ResultStatus status = 2;
+}
+
+message ReplyRoleList {
+  int32 number = 1;
+  repeated RoleInfo list = 2;
+}
+
+message ReqRoleUpdate {
+  string uid = 1;
+  string name = 2;
+  string remark = 3;
+}
+
+message ReqRoleMenu {
+  string role = 1;
+  string menu = 2;
+}
+
+message ReplyRoleMenu {
+  string role = 1;
+  repeated string menus = 2;
+  ResultStatus status = 3;
+}
