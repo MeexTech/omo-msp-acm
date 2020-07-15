@@ -1,7 +1,7 @@
 syntax = "proto3";
 
 package omo.msp.acm;
-option go_package= "omo.msp.acm";
+option go_package= "proto/acm;omo_msp_acm";
 import "proto/acm/common.proto";
 
 service MenuService {
@@ -21,6 +21,8 @@ message MenuInfo {
   string type = 6;
   string path = 7;
   string method = 8;
+  string creator = 9;
+  string operator = 10;
 }
 
 message ReqMenuAdd {
@@ -28,6 +30,7 @@ message ReqMenuAdd {
   string type = 2;
   string path = 3;
   string method = 4;
+  string operator = 5;
 }
 
 message ReplyMenuInfo {
@@ -46,4 +49,5 @@ message ReqMenuUpdate {
   string type = 3;
   string path = 4;
   string method = 5;
+  string operator = 6;
 }

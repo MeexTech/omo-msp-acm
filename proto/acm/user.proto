@@ -1,7 +1,7 @@
 syntax = "proto3";
 
 package omo.msp.acm;
-option go_package= "omo.msp.acm";
+option go_package= "proto/acm;omo_msp_acm";
 import "proto/acm/common.proto";
 
 service UserService {
@@ -22,7 +22,8 @@ message UserLink {
 
 message ReqUserAdd {
   string user = 1;
-  repeated string roles = 2;
+  string operator = 2;
+  repeated string roles = 3;
 }
 
 message ReplyUserLink {
@@ -54,6 +55,7 @@ message ReqUserPermission {
 message ReqLinkRole {
   string user = 1;
   string role = 2;
+  string operator = 3;
 }
 
 message ReplyLinkRole {

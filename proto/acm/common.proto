@@ -1,7 +1,7 @@
 syntax = "proto3";
 
 package omo.msp.acm;
-option go_package= "omo.msp.acm";
+option go_package= "proto/acm;omo_msp_acm";
 
 enum ResultStatus {
   Success = 0;
@@ -14,6 +14,7 @@ enum ResultStatus {
 
 message RequestInfo {
   string uid = 1;
+  string operator = 2;
 }
 
 message ReplyInfo {

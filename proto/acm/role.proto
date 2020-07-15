@@ -1,7 +1,7 @@
 syntax = "proto3";
 
 package omo.msp.acm;
-option go_package= "omo.msp.acm";
+option go_package= "proto/acm;omo_msp_acm";
 import "proto/acm/common.proto";
 
 service RoleService {
@@ -21,13 +21,16 @@ message RoleInfo {
   int64 updated = 4;
   string name = 5;
   string remark = 6;
-  repeated string menus = 7;
+  string creator = 7;
+  string operator = 8;
+  repeated string menus = 9;
 }
 
 message ReqRoleAdd {
   string name = 1;
   string remark = 2;
-  repeated string menus = 3;
+  string operator = 3;
+  repeated string menus = 4;
 }
 
 message ReplyRoleInfo {
@@ -44,11 +47,13 @@ message ReqRoleUpdate {
   string uid = 1;
   string name = 2;
   string remark = 3;
+  string operator = 4;
 }
 
 message ReqRoleMenu {
   string role = 1;
   string menu = 2;
+  string operator = 3;
 }
 
 message ReplyRoleMenu {
