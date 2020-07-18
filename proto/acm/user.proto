@@ -17,13 +17,15 @@ service UserService {
 message UserLink {
   string uid = 1;
   string user = 2;
-  repeated string roles = 3;
+  uint32 type = 3;
+  repeated string roles = 4;
 }
 
 message ReqUserAdd {
   string user = 1;
-  string operator = 2;
-  repeated string roles = 3;
+  uint32 type = 2;
+  string operator = 3;
+  repeated string roles = 4;
 }
 
 message ReplyUserLink {
@@ -37,7 +39,10 @@ message ReqUserList {
 }
 
 message ReplyUserList {
-  repeated UserLink users = 1;
+  uint64 total = 1;
+  uint32 pageNow = 2;
+  uint32 pageMax = 3;
+  repeated UserLink users = 4;
 }
 
 message ReplyUserPermission {
