@@ -10,8 +10,8 @@ service RoleService {
   rpc RemoveOne(RequestInfo) returns (ReplyInfo) {}
   rpc GetAll(RequestInfo) returns (ReplyRoleList) {}
   rpc UpdateBase(ReqRoleUpdate) returns (ReplyRoleInfo) {}
-  rpc AppendMenu(ReqRoleMenu) returns (ReplyRoleMenu) {}
-  rpc SubtractMenu(ReqRoleMenu) returns (ReplyRoleMenu) {}
+  rpc AppendMenu(ReqRoleMenus) returns (ReplyRoleMenu) {}
+  rpc SubtractMenu(ReqRoleMenus) returns (ReplyRoleMenu) {}
 }
 
 message RoleInfo {
@@ -50,10 +50,10 @@ message ReqRoleUpdate {
   string operator = 4;
 }
 
-message ReqRoleMenu {
+message ReqRoleMenus {
   string role = 1;
-  string menu = 2;
-  string operator = 3;
+  string operator = 2;
+  repeated string menus = 3;
 }
 
 message ReplyRoleMenu {

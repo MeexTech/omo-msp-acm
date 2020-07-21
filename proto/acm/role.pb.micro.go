@@ -47,8 +47,8 @@ type RoleService interface {
 	RemoveOne(ctx context.Context, in *RequestInfo, opts ...client.CallOption) (*ReplyInfo, error)
 	GetAll(ctx context.Context, in *RequestInfo, opts ...client.CallOption) (*ReplyRoleList, error)
 	UpdateBase(ctx context.Context, in *ReqRoleUpdate, opts ...client.CallOption) (*ReplyRoleInfo, error)
-	AppendMenu(ctx context.Context, in *ReqRoleMenu, opts ...client.CallOption) (*ReplyRoleMenu, error)
-	SubtractMenu(ctx context.Context, in *ReqRoleMenu, opts ...client.CallOption) (*ReplyRoleMenu, error)
+	AppendMenu(ctx context.Context, in *ReqRoleMenus, opts ...client.CallOption) (*ReplyRoleMenu, error)
+	SubtractMenu(ctx context.Context, in *ReqRoleMenus, opts ...client.CallOption) (*ReplyRoleMenu, error)
 }
 
 type roleService struct {
@@ -113,7 +113,7 @@ func (c *roleService) UpdateBase(ctx context.Context, in *ReqRoleUpdate, opts ..
 	return out, nil
 }
 
-func (c *roleService) AppendMenu(ctx context.Context, in *ReqRoleMenu, opts ...client.CallOption) (*ReplyRoleMenu, error) {
+func (c *roleService) AppendMenu(ctx context.Context, in *ReqRoleMenus, opts ...client.CallOption) (*ReplyRoleMenu, error) {
 	req := c.c.NewRequest(c.name, "RoleService.AppendMenu", in)
 	out := new(ReplyRoleMenu)
 	err := c.c.Call(ctx, req, out, opts...)
@@ -123,7 +123,7 @@ func (c *roleService) AppendMenu(ctx context.Context, in *ReqRoleMenu, opts ...c
 	return out, nil
 }
 
-func (c *roleService) SubtractMenu(ctx context.Context, in *ReqRoleMenu, opts ...client.CallOption) (*ReplyRoleMenu, error) {
+func (c *roleService) SubtractMenu(ctx context.Context, in *ReqRoleMenus, opts ...client.CallOption) (*ReplyRoleMenu, error) {
 	req := c.c.NewRequest(c.name, "RoleService.SubtractMenu", in)
 	out := new(ReplyRoleMenu)
 	err := c.c.Call(ctx, req, out, opts...)
@@ -141,8 +141,8 @@ type RoleServiceHandler interface {
 	RemoveOne(context.Context, *RequestInfo, *ReplyInfo) error
 	GetAll(context.Context, *RequestInfo, *ReplyRoleList) error
 	UpdateBase(context.Context, *ReqRoleUpdate, *ReplyRoleInfo) error
-	AppendMenu(context.Context, *ReqRoleMenu, *ReplyRoleMenu) error
-	SubtractMenu(context.Context, *ReqRoleMenu, *ReplyRoleMenu) error
+	AppendMenu(context.Context, *ReqRoleMenus, *ReplyRoleMenu) error
+	SubtractMenu(context.Context, *ReqRoleMenus, *ReplyRoleMenu) error
 }
 
 func RegisterRoleServiceHandler(s server.Server, hdlr RoleServiceHandler, opts ...server.HandlerOption) error {
@@ -152,8 +152,8 @@ func RegisterRoleServiceHandler(s server.Server, hdlr RoleServiceHandler, opts .
 		RemoveOne(ctx context.Context, in *RequestInfo, out *ReplyInfo) error
 		GetAll(ctx context.Context, in *RequestInfo, out *ReplyRoleList) error
 		UpdateBase(ctx context.Context, in *ReqRoleUpdate, out *ReplyRoleInfo) error
-		AppendMenu(ctx context.Context, in *ReqRoleMenu, out *ReplyRoleMenu) error
-		SubtractMenu(ctx context.Context, in *ReqRoleMenu, out *ReplyRoleMenu) error
+		AppendMenu(ctx context.Context, in *ReqRoleMenus, out *ReplyRoleMenu) error
+		SubtractMenu(ctx context.Context, in *ReqRoleMenus, out *ReplyRoleMenu) error
 	}
 	type RoleService struct {
 		roleService
@@ -186,10 +186,10 @@ func (h *roleServiceHandler) UpdateBase(ctx context.Context, in *ReqRoleUpdate, 
 	return h.RoleServiceHandler.UpdateBase(ctx, in, out)
 }
 
-func (h *roleServiceHandler) AppendMenu(ctx context.Context, in *ReqRoleMenu, out *ReplyRoleMenu) error {
+func (h *roleServiceHandler) AppendMenu(ctx context.Context, in *ReqRoleMenus, out *ReplyRoleMenu) error {
 	return h.RoleServiceHandler.AppendMenu(ctx, in, out)
 }
 
-func (h *roleServiceHandler) SubtractMenu(ctx context.Context, in *ReqRoleMenu, out *ReplyRoleMenu) error {
+func (h *roleServiceHandler) SubtractMenu(ctx context.Context, in *ReqRoleMenus, out *ReplyRoleMenu) error {
 	return h.RoleServiceHandler.SubtractMenu(ctx, in, out)
 }

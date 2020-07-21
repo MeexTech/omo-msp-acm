@@ -47,7 +47,7 @@ type UserService interface {
 	RemoveOne(ctx context.Context, in *RequestInfo, opts ...client.CallOption) (*ReplyInfo, error)
 	GetList(ctx context.Context, in *ReqUserList, opts ...client.CallOption) (*ReplyUserList, error)
 	IsPermission(ctx context.Context, in *ReqUserPermission, opts ...client.CallOption) (*ReplyUserPermission, error)
-	AppendRole(ctx context.Context, in *ReqLinkRole, opts ...client.CallOption) (*ReplyLinkRole, error)
+	AppendRole(ctx context.Context, in *ReqUserAdd, opts ...client.CallOption) (*ReplyLinkRole, error)
 	SubtractRole(ctx context.Context, in *ReqLinkRole, opts ...client.CallOption) (*ReplyLinkRole, error)
 }
 
@@ -113,7 +113,7 @@ func (c *userService) IsPermission(ctx context.Context, in *ReqUserPermission, o
 	return out, nil
 }
 
-func (c *userService) AppendRole(ctx context.Context, in *ReqLinkRole, opts ...client.CallOption) (*ReplyLinkRole, error) {
+func (c *userService) AppendRole(ctx context.Context, in *ReqUserAdd, opts ...client.CallOption) (*ReplyLinkRole, error) {
 	req := c.c.NewRequest(c.name, "UserService.AppendRole", in)
 	out := new(ReplyLinkRole)
 	err := c.c.Call(ctx, req, out, opts...)
@@ -141,7 +141,7 @@ type UserServiceHandler interface {
 	RemoveOne(context.Context, *RequestInfo, *ReplyInfo) error
 	GetList(context.Context, *ReqUserList, *ReplyUserList) error
 	IsPermission(context.Context, *ReqUserPermission, *ReplyUserPermission) error
-	AppendRole(context.Context, *ReqLinkRole, *ReplyLinkRole) error
+	AppendRole(context.Context, *ReqUserAdd, *ReplyLinkRole) error
 	SubtractRole(context.Context, *ReqLinkRole, *ReplyLinkRole) error
 }
 
@@ -152,7 +152,7 @@ func RegisterUserServiceHandler(s server.Server, hdlr UserServiceHandler, opts .
 		RemoveOne(ctx context.Context, in *RequestInfo, out *ReplyInfo) error
 		GetList(ctx context.Context, in *ReqUserList, out *ReplyUserList) error
 		IsPermission(ctx context.Context, in *ReqUserPermission, out *ReplyUserPermission) error
-		AppendRole(ctx context.Context, in *ReqLinkRole, out *ReplyLinkRole) error
+		AppendRole(ctx context.Context, in *ReqUserAdd, out *ReplyLinkRole) error
 		SubtractRole(ctx context.Context, in *ReqLinkRole, out *ReplyLinkRole) error
 	}
 	type UserService struct {
@@ -186,7 +186,7 @@ func (h *userServiceHandler) IsPermission(ctx context.Context, in *ReqUserPermis
 	return h.UserServiceHandler.IsPermission(ctx, in, out)
 }
 
-func (h *userServiceHandler) AppendRole(ctx context.Context, in *ReqLinkRole, out *ReplyLinkRole) error {
+func (h *userServiceHandler) AppendRole(ctx context.Context, in *ReqUserAdd, out *ReplyLinkRole) error {
 	return h.UserServiceHandler.AppendRole(ctx, in, out)
 }
 

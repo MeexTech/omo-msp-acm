@@ -10,7 +10,7 @@ service UserService {
   rpc RemoveOne(RequestInfo) returns (ReplyInfo) {}
   rpc GetList(ReqUserList) returns (ReplyUserList) {}
   rpc IsPermission(ReqUserPermission) returns (ReplyUserPermission) {}
-  rpc AppendRole(ReqLinkRole) returns (ReplyLinkRole) {}
+  rpc AppendRole(ReqUserAdd) returns (ReplyLinkRole) {}
   rpc SubtractRole(ReqLinkRole) returns (ReplyLinkRole) {}
 }
 
@@ -59,9 +59,9 @@ message ReqUserPermission {
 
 message ReqLinkRole {
   string user = 1;
-  string role = 2;
-  uint32 type = 3;
-  string operator = 4;
+  uint32 type = 2;
+  string operator = 3;
+  string role = 4;
 }
 
 message ReplyLinkRole {
