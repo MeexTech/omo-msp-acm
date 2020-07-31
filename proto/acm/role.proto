@@ -48,6 +48,7 @@ message ReqRoleUpdate {
   string name = 2;
   string remark = 3;
   string operator = 4;
+  repeated string menus = 5;
 }
 
 message ReqRoleMenus {
