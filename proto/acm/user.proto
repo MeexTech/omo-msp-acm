@@ -30,7 +30,7 @@ message ReqUserAdd {
 
 message ReplyUserLink {
   UserLink info = 1;
-  ResultStatus status = 2;
+  ReplyStatus status = 2;
 }
 
 message ReqUserList {
@@ -48,7 +48,7 @@ message ReplyUserList {
 message ReplyUserPermission {
   string user = 1;
   bool permission = 2;
-  ResultStatus status = 3;
+  ReplyStatus status = 3;
 }
 
 message ReqUserPermission {
@@ -66,6 +66,6 @@ message ReqLinkRole {
 
 message ReplyLinkRole {
   string user = 1;
-  repeated string roles = 2;
-  ResultStatus status = 3;
+  ReplyStatus status = 2;
+  repeated string roles = 3;
 }

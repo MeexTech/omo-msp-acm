@@ -35,12 +35,13 @@ message ReqRoleAdd {
 
 message ReplyRoleInfo {
   RoleInfo info = 1;
-  ResultStatus status = 2;
+  ReplyStatus status = 2;
 }
 
 message ReplyRoleList {
   int32 number = 1;
-  repeated RoleInfo list = 2;
+  ReplyStatus status = 2;
+  repeated RoleInfo list = 3;
 }
 
 message ReqRoleUpdate {
@@ -59,6 +60,6 @@ message ReqRoleMenus {
 
 message ReplyRoleMenu {
   string role = 1;
-  repeated string menus = 2;
-  ResultStatus status = 3;
+  ReplyStatus status = 2;
+  repeated string menus = 3;
 }

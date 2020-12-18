@@ -35,12 +35,13 @@ message ReqMenuAdd {
 
 message ReplyMenuInfo {
   MenuInfo info = 1;
-  ResultStatus status = 2;
+  ReplyStatus status = 2;
 }
 
 message ReplyMenuList {
   int32 number = 1;
-  repeated MenuInfo list = 2;
+  ReplyStatus status = 2;
+  repeated MenuInfo list = 3;
 }
 
 message ReqMenuUpdate {
