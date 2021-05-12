@@ -39,8 +39,8 @@ type UserService interface {
 	RemoveOne(ctx context.Context, in *RequestInfo, opts ...client.CallOption) (*ReplyInfo, error)
 	GetList(ctx context.Context, in *ReqUserList, opts ...client.CallOption) (*ReplyUserList, error)
 	IsPermission(ctx context.Context, in *ReqUserPermission, opts ...client.CallOption) (*ReplyUserPermission, error)
-	AppendRole(ctx context.Context, in *ReqUserAdd, opts ...client.CallOption) (*ReplyLinkRole, error)
-	SubtractRole(ctx context.Context, in *ReqLinkRole, opts ...client.CallOption) (*ReplyLinkRole, error)
+	UpdateRoles(ctx context.Context, in *ReqUserLinks, opts ...client.CallOption) (*ReplyLinkRole, error)
+	UpdateLinks(ctx context.Context, in *ReqUserLinks, opts ...client.CallOption) (*ReplyLinkRole, error)
 }
 
 type userService struct {
@@ -105,8 +105,8 @@ func (c *userService) IsPermission(ctx context.Context, in *ReqUserPermission, o
 	return out, nil
 }
 
-func (c *userService) AppendRole(ctx context.Context, in *ReqUserAdd, opts ...client.CallOption) (*ReplyLinkRole, error) {
-	req := c.c.NewRequest(c.name, "UserService.AppendRole", in)
+func (c *userService) UpdateRoles(ctx context.Context, in *ReqUserLinks, opts ...client.CallOption) (*ReplyLinkRole, error) {
+	req := c.c.NewRequest(c.name, "UserService.UpdateRoles", in)
 	out := new(ReplyLinkRole)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
@@ -115,8 +115,8 @@ func (c *userService) AppendRole(ctx context.Context, in *ReqUserAdd, opts ...cl
 	return out, nil
 }
 
-func (c *userService) SubtractRole(ctx context.Context, in *ReqLinkRole, opts ...client.CallOption) (*ReplyLinkRole, error) {
-	req := c.c.NewRequest(c.name, "UserService.SubtractRole", in)
+func (c *userService) UpdateLinks(ctx context.Context, in *ReqUserLinks, opts ...client.CallOption) (*ReplyLinkRole, error) {
+	req := c.c.NewRequest(c.name, "UserService.UpdateLinks", in)
 	out := new(ReplyLinkRole)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
@@ -133,8 +133,8 @@ type UserServiceHandler interface {
 	RemoveOne(context.Context, *RequestInfo, *ReplyInfo) error
 	GetList(context.Context, *ReqUserList, *ReplyUserList) error
 	IsPermission(context.Context, *ReqUserPermission, *ReplyUserPermission) error
-	AppendRole(context.Context, *ReqUserAdd, *ReplyLinkRole) error
-	SubtractRole(context.Context, *ReqLinkRole, *ReplyLinkRole) error
+	UpdateRoles(context.Context, *ReqUserLinks, *ReplyLinkRole) error
+	UpdateLinks(context.Context, *ReqUserLinks, *ReplyLinkRole) error
 }
 
 func RegisterUserServiceHandler(s server.Server, hdlr UserServiceHandler, opts ...server.HandlerOption) error {
@@ -144,8 +144,8 @@ func RegisterUserServiceHandler(s server.Server, hdlr UserServiceHandler, opts .
 		RemoveOne(ctx context.Context, in *RequestInfo, out *ReplyInfo) error
 		GetList(ctx context.Context, in *ReqUserList, out *ReplyUserList) error
 		IsPermission(ctx context.Context, in *ReqUserPermission, out *ReplyUserPermission) error
-		AppendRole(ctx context.Context, in *ReqUserAdd, out *ReplyLinkRole) error
-		SubtractRole(ctx context.Context, in *ReqLinkRole, out *ReplyLinkRole) error
+		UpdateRoles(ctx context.Context, in *ReqUserLinks, out *ReplyLinkRole) error
+		UpdateLinks(ctx context.Context, in *ReqUserLinks, out *ReplyLinkRole) error
 	}
 	type UserService struct {
 		userService
@@ -178,10 +178,10 @@ func (h *userServiceHandler) IsPermission(ctx context.Context, in *ReqUserPermis
 	return h.UserServiceHandler.IsPermission(ctx, in, out)
 }
 
-func (h *userServiceHandler) AppendRole(ctx context.Context, in *ReqUserAdd, out *ReplyLinkRole) error {
-	return h.UserServiceHandler.AppendRole(ctx, in, out)
+func (h *userServiceHandler) UpdateRoles(ctx context.Context, in *ReqUserLinks, out *ReplyLinkRole) error {
+	return h.UserServiceHandler.UpdateRoles(ctx, in, out)
 }
 
-func (h *userServiceHandler) SubtractRole(ctx context.Context, in *ReqLinkRole, out *ReplyLinkRole) error {
-	return h.UserServiceHandler.SubtractRole(ctx, in, out)
+func (h *userServiceHandler) UpdateLinks(ctx context.Context, in *ReqUserLinks, out *ReplyLinkRole) error {
+	return h.UserServiceHandler.UpdateLinks(ctx, in, out)
 }
