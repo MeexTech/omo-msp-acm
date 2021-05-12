@@ -39,8 +39,8 @@ type UserService interface {
 	RemoveOne(ctx context.Context, in *RequestInfo, opts ...client.CallOption) (*ReplyInfo, error)
 	GetList(ctx context.Context, in *ReqUserList, opts ...client.CallOption) (*ReplyUserList, error)
 	IsPermission(ctx context.Context, in *ReqUserPermission, opts ...client.CallOption) (*ReplyUserPermission, error)
-	UpdateRoles(ctx context.Context, in *ReqUserLinks, opts ...client.CallOption) (*ReplyLinkRole, error)
-	UpdateLinks(ctx context.Context, in *ReqUserLinks, opts ...client.CallOption) (*ReplyLinkRole, error)
+	UpdateRoles(ctx context.Context, in *ReqUserLinks, opts ...client.CallOption) (*ReplyUserLinks, error)
+	UpdateLinks(ctx context.Context, in *ReqUserLinks, opts ...client.CallOption) (*ReplyUserLinks, error)
 }
 
 type userService struct {
@@ -105,9 +105,9 @@ func (c *userService) IsPermission(ctx context.Context, in *ReqUserPermission, o
 	return out, nil
 }
 
-func (c *userService) UpdateRoles(ctx context.Context, in *ReqUserLinks, opts ...client.CallOption) (*ReplyLinkRole, error) {
+func (c *userService) UpdateRoles(ctx context.Context, in *ReqUserLinks, opts ...client.CallOption) (*ReplyUserLinks, error) {
 	req := c.c.NewRequest(c.name, "UserService.UpdateRoles", in)
-	out := new(ReplyLinkRole)
+	out := new(ReplyUserLinks)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
 		return nil, err
@@ -115,9 +115,9 @@ func (c *userService) UpdateRoles(ctx context.Context, in *ReqUserLinks, opts ..
 	return out, nil
 }
 
-func (c *userService) UpdateLinks(ctx context.Context, in *ReqUserLinks, opts ...client.CallOption) (*ReplyLinkRole, error) {
+func (c *userService) UpdateLinks(ctx context.Context, in *ReqUserLinks, opts ...client.CallOption) (*ReplyUserLinks, error) {
 	req := c.c.NewRequest(c.name, "UserService.UpdateLinks", in)
-	out := new(ReplyLinkRole)
+	out := new(ReplyUserLinks)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
 		return nil, err
@@ -133,8 +133,8 @@ type UserServiceHandler interface {
 	RemoveOne(context.Context, *RequestInfo, *ReplyInfo) error
 	GetList(context.Context, *ReqUserList, *ReplyUserList) error
 	IsPermission(context.Context, *ReqUserPermission, *ReplyUserPermission) error
-	UpdateRoles(context.Context, *ReqUserLinks, *ReplyLinkRole) error
-	UpdateLinks(context.Context, *ReqUserLinks, *ReplyLinkRole) error
+	UpdateRoles(context.Context, *ReqUserLinks, *ReplyUserLinks) error
+	UpdateLinks(context.Context, *ReqUserLinks, *ReplyUserLinks) error
 }
 
 func RegisterUserServiceHandler(s server.Server, hdlr UserServiceHandler, opts ...server.HandlerOption) error {
@@ -144,8 +144,8 @@ func RegisterUserServiceHandler(s server.Server, hdlr UserServiceHandler, opts .
 		RemoveOne(ctx context.Context, in *RequestInfo, out *ReplyInfo) error
 		GetList(ctx context.Context, in *ReqUserList, out *ReplyUserList) error
 		IsPermission(ctx context.Context, in *ReqUserPermission, out *ReplyUserPermission) error
-		UpdateRoles(ctx context.Context, in *ReqUserLinks, out *ReplyLinkRole) error
-		UpdateLinks(ctx context.Context, in *ReqUserLinks, out *ReplyLinkRole) error
+		UpdateRoles(ctx context.Context, in *ReqUserLinks, out *ReplyUserLinks) error
+		UpdateLinks(ctx context.Context, in *ReqUserLinks, out *ReplyUserLinks) error
 	}
 	type UserService struct {
 		userService
@@ -178,10 +178,10 @@ func (h *userServiceHandler) IsPermission(ctx context.Context, in *ReqUserPermis
 	return h.UserServiceHandler.IsPermission(ctx, in, out)
 }
 
-func (h *userServiceHandler) UpdateRoles(ctx context.Context, in *ReqUserLinks, out *ReplyLinkRole) error {
+func (h *userServiceHandler) UpdateRoles(ctx context.Context, in *ReqUserLinks, out *ReplyUserLinks) error {
 	return h.UserServiceHandler.UpdateRoles(ctx, in, out)
 }
 
-func (h *userServiceHandler) UpdateLinks(ctx context.Context, in *ReqUserLinks, out *ReplyLinkRole) error {
+func (h *userServiceHandler) UpdateLinks(ctx context.Context, in *ReqUserLinks, out *ReplyUserLinks) error {
 	return h.UserServiceHandler.UpdateLinks(ctx, in, out)
 }
