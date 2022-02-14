@@ -22,6 +22,7 @@ message CatalogInfo {
   string name = 7;
   string remark = 8;
   string key = 9;
+  uint32 type = 10;
 }
 
 message ReqCatalogAdd {
@@ -29,6 +30,7 @@ message ReqCatalogAdd {
   string remark = 2;
   string key = 3;
   string operator = 4;
+  uint32 type = 5;
 }
 
 message ReplyCatalogInfo {

@@ -18,16 +18,18 @@ message UserLink {
   string uid = 1;
   string user = 2;
   uint32 type = 3;
-  repeated string roles = 4;
-  repeated string links = 5;
+  string owner = 4;
+  repeated string roles = 5;
+  repeated string links = 6;
 }
 
 message ReqUserAdd {
   string user = 1;
   uint32 type = 2;
   string operator = 3;
-  repeated string roles = 4;
-  repeated string links = 5;
+  string owner = 4;
+  repeated string roles = 5;
+  repeated string links = 6;
 }
 
 message ReplyUserLink {
