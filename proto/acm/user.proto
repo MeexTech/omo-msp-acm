@@ -40,6 +40,7 @@ message ReplyUserLink {
 message ReqUserList {
   int32 page = 1;
   int32 number = 2;
+  string owner = 3;
 }
 
 message ReplyUserList {
