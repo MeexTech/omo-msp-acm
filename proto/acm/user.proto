@@ -11,6 +11,7 @@ service UserService {
   rpc GetList(ReqUserList) returns (ReplyUserList) {}
   rpc IsPermission(ReqUserPermission) returns (ReplyUserPermission) {}
   rpc UpdateRoles(ReqUserLinks) returns (ReplyUserLinks) {}
+  rpc UpdateStatus(ReqUserStatus) returns (ReplyInfo) {}
   rpc UpdateLinks(ReqUserLinks) returns (ReplyUserLinks) {}
 }
 
@@ -19,8 +20,9 @@ message UserLink {
   string user = 2;
   uint32 type = 3;
   string owner = 4;
-  repeated string roles = 5;
-  repeated string links = 6;
+  uint32 status = 5;
+  repeated string roles = 6;
+  repeated string links = 7;
 }
 
 message ReqUserAdd {
@@ -41,6 +43,12 @@ message ReqUserList {
   int32 page = 1;
   int32 number = 2;
   string owner = 3;
+}
+
+message ReqUserStatus {
+  string uid = 1;
+  uint32 status = 2;
+  string operator = 3;
 }
 
 message ReplyUserList {

@@ -40,6 +40,7 @@ type UserService interface {
 	GetList(ctx context.Context, in *ReqUserList, opts ...client.CallOption) (*ReplyUserList, error)
 	IsPermission(ctx context.Context, in *ReqUserPermission, opts ...client.CallOption) (*ReplyUserPermission, error)
 	UpdateRoles(ctx context.Context, in *ReqUserLinks, opts ...client.CallOption) (*ReplyUserLinks, error)
+	UpdateStatus(ctx context.Context, in *ReqUserStatus, opts ...client.CallOption) (*ReplyInfo, error)
 	UpdateLinks(ctx context.Context, in *ReqUserLinks, opts ...client.CallOption) (*ReplyUserLinks, error)
 }
 
@@ -115,6 +116,16 @@ func (c *userService) UpdateRoles(ctx context.Context, in *ReqUserLinks, opts ..
 	return out, nil
 }
 
+func (c *userService) UpdateStatus(ctx context.Context, in *ReqUserStatus, opts ...client.CallOption) (*ReplyInfo, error) {
+	req := c.c.NewRequest(c.name, "UserService.UpdateStatus", in)
+	out := new(ReplyInfo)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *userService) UpdateLinks(ctx context.Context, in *ReqUserLinks, opts ...client.CallOption) (*ReplyUserLinks, error) {
 	req := c.c.NewRequest(c.name, "UserService.UpdateLinks", in)
 	out := new(ReplyUserLinks)
@@ -134,6 +145,7 @@ type UserServiceHandler interface {
 	GetList(context.Context, *ReqUserList, *ReplyUserList) error
 	IsPermission(context.Context, *ReqUserPermission, *ReplyUserPermission) error
 	UpdateRoles(context.Context, *ReqUserLinks, *ReplyUserLinks) error
+	UpdateStatus(context.Context, *ReqUserStatus, *ReplyInfo) error
 	UpdateLinks(context.Context, *ReqUserLinks, *ReplyUserLinks) error
 }
 
@@ -145,6 +157,7 @@ func RegisterUserServiceHandler(s server.Server, hdlr UserServiceHandler, opts .
 		GetList(ctx context.Context, in *ReqUserList, out *ReplyUserList) error
 		IsPermission(ctx context.Context, in *ReqUserPermission, out *ReplyUserPermission) error
 		UpdateRoles(ctx context.Context, in *ReqUserLinks, out *ReplyUserLinks) error
+		UpdateStatus(ctx context.Context, in *ReqUserStatus, out *ReplyInfo) error
 		UpdateLinks(ctx context.Context, in *ReqUserLinks, out *ReplyUserLinks) error
 	}
 	type UserService struct {
@@ -180,6 +193,10 @@ func (h *userServiceHandler) IsPermission(ctx context.Context, in *ReqUserPermis
 
 func (h *userServiceHandler) UpdateRoles(ctx context.Context, in *ReqUserLinks, out *ReplyUserLinks) error {
 	return h.UserServiceHandler.UpdateRoles(ctx, in, out)
+}
+
+func (h *userServiceHandler) UpdateStatus(ctx context.Context, in *ReqUserStatus, out *ReplyInfo) error {
+	return h.UserServiceHandler.UpdateStatus(ctx, in, out)
 }
 
 func (h *userServiceHandler) UpdateLinks(ctx context.Context, in *ReqUserLinks, out *ReplyUserLinks) error {
