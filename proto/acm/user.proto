@@ -69,6 +69,7 @@ message ReqUserPermission {
   string user = 1;
   string path = 2;
   string action = 3;
+  string owner = 4;
 }
 
 message ReqUserLinks {
