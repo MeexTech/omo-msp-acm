@@ -49,6 +49,7 @@ message ReqUserStatus {
   string uid = 1;
   uint32 status = 2;
   string operator = 3;
+  string owner = 4;
 }
 
 message ReplyUserList {
