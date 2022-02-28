@@ -61,7 +61,8 @@ message ReplyUserList {
 message ReplyUserPermission {
   string user = 1;
   bool permission = 2;
-  ReplyStatus status = 3;
+  string owner = 3;
+  ReplyStatus status = 4;
 }
 
 message ReqUserPermission {
@@ -74,7 +75,8 @@ message ReqUserLinks {
   string uid = 1;
   string user = 2;
   string operator = 3;
-  repeated string list = 4;
+  string owner = 4;
+  repeated string list = 5;
 }
 
 message ReplyUserLinks {
