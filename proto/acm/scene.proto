@@ -1,0 +1,62 @@
+syntax = "proto3";
+
+package omo.msp.acm;
+option go_package= "proto/acm;omo_msp_acm";
+import "proto/acm/common.proto";
+
+service SceneService {
+  rpc AddOne(ReqSceneAdd) returns (ReplySceneLink) {}
+  rpc GetOne(RequestInfo) returns (ReplySceneLink) {}
+  rpc RemoveOne(RequestInfo) returns (ReplyInfo) {}
+  rpc GetList(RequestPage) returns (ReplySceneList) {}
+  rpc UpdateStatus(ReqSceneStatus) returns (ReplyInfo) {}
+  rpc UpdateModules(ReqSceneLinks) returns (ReplySceneLink) {}
+}
+
+message SceneLink {
+  string uid = 1;
+  uint64 id = 2;
+  int64 created = 3;
+  int64 updated = 4;
+  string creator = 5;
+  string operator = 6;
+  string name = 7;
+  string scene = 8;
+  uint32 type = 9;
+  uint32 status = 10;
+  repeated string links = 11;
+}
+
+message ReqSceneAdd {
+  string scene = 1;
+  uint32 type = 2;
+  string operator = 3;
+  repeated string links = 4;
+}
+
+message ReplySceneLink {
+  SceneLink info = 1;
+  ReplyStatus status = 2;
+}
+
+message ReqSceneStatus {
+  string uid = 1;
+  uint32 status = 2;
+  string operator = 3;
+  string owner = 4;
+}
+
+message ReplySceneList {
+  uint64 total = 1;
+  uint32 pageNow = 2;
+  uint32 pageMax = 3;
+  repeated SceneLink list = 4;
+}
+
+message ReqSceneLinks {
+  string uid = 1;
+  string scene = 2;
+  string operator = 3;
+  repeated string list = 4;
+}
+

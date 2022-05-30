@@ -18,3 +18,10 @@ message ReplyInfo {
   string uid = 1;
   ReplyStatus status = 2;
 }
+
+message RequestPage{
+  string parent = 1;
+  uint32 number = 2;
+  uint32 page = 3;
+  uint32 type = 4;
+}

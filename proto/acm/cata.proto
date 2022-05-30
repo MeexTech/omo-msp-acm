@@ -8,7 +8,7 @@ service CatalogService {
   rpc AddOne(ReqCatalogAdd) returns (ReplyCatalogInfo) {}
   rpc GetOne(RequestInfo) returns (ReplyCatalogInfo) {}
   rpc RemoveOne(RequestInfo) returns (ReplyInfo) {}
-  rpc GetAll(RequestInfo) returns (ReplyCatalogList) {}
+  rpc GetAll(RequestPage) returns (ReplyCatalogList) {}
   rpc UpdateBase(ReqCatalogUpdate) returns (ReplyCatalogInfo) {}
 }
 
