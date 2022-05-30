@@ -37,7 +37,7 @@ type CatalogService interface {
 	AddOne(ctx context.Context, in *ReqCatalogAdd, opts ...client.CallOption) (*ReplyCatalogInfo, error)
 	GetOne(ctx context.Context, in *RequestInfo, opts ...client.CallOption) (*ReplyCatalogInfo, error)
 	RemoveOne(ctx context.Context, in *RequestInfo, opts ...client.CallOption) (*ReplyInfo, error)
-	GetAll(ctx context.Context, in *RequestInfo, opts ...client.CallOption) (*ReplyCatalogList, error)
+	GetAll(ctx context.Context, in *RequestPage, opts ...client.CallOption) (*ReplyCatalogList, error)
 	UpdateBase(ctx context.Context, in *ReqCatalogUpdate, opts ...client.CallOption) (*ReplyCatalogInfo, error)
 }
 
@@ -83,7 +83,7 @@ func (c *catalogService) RemoveOne(ctx context.Context, in *RequestInfo, opts ..
 	return out, nil
 }
 
-func (c *catalogService) GetAll(ctx context.Context, in *RequestInfo, opts ...client.CallOption) (*ReplyCatalogList, error) {
+func (c *catalogService) GetAll(ctx context.Context, in *RequestPage, opts ...client.CallOption) (*ReplyCatalogList, error) {
 	req := c.c.NewRequest(c.name, "CatalogService.GetAll", in)
 	out := new(ReplyCatalogList)
 	err := c.c.Call(ctx, req, out, opts...)
@@ -109,7 +109,7 @@ type CatalogServiceHandler interface {
 	AddOne(context.Context, *ReqCatalogAdd, *ReplyCatalogInfo) error
 	GetOne(context.Context, *RequestInfo, *ReplyCatalogInfo) error
 	RemoveOne(context.Context, *RequestInfo, *ReplyInfo) error
-	GetAll(context.Context, *RequestInfo, *ReplyCatalogList) error
+	GetAll(context.Context, *RequestPage, *ReplyCatalogList) error
 	UpdateBase(context.Context, *ReqCatalogUpdate, *ReplyCatalogInfo) error
 }
 
@@ -118,7 +118,7 @@ func RegisterCatalogServiceHandler(s server.Server, hdlr CatalogServiceHandler, 
 		AddOne(ctx context.Context, in *ReqCatalogAdd, out *ReplyCatalogInfo) error
 		GetOne(ctx context.Context, in *RequestInfo, out *ReplyCatalogInfo) error
 		RemoveOne(ctx context.Context, in *RequestInfo, out *ReplyInfo) error
-		GetAll(ctx context.Context, in *RequestInfo, out *ReplyCatalogList) error
+		GetAll(ctx context.Context, in *RequestPage, out *ReplyCatalogList) error
 		UpdateBase(ctx context.Context, in *ReqCatalogUpdate, out *ReplyCatalogInfo) error
 	}
 	type CatalogService struct {
@@ -144,7 +144,7 @@ func (h *catalogServiceHandler) RemoveOne(ctx context.Context, in *RequestInfo, 
 	return h.CatalogServiceHandler.RemoveOne(ctx, in, out)
 }
 
-func (h *catalogServiceHandler) GetAll(ctx context.Context, in *RequestInfo, out *ReplyCatalogList) error {
+func (h *catalogServiceHandler) GetAll(ctx context.Context, in *RequestPage, out *ReplyCatalogList) error {
 	return h.CatalogServiceHandler.GetAll(ctx, in, out)
 }
 

@@ -37,7 +37,7 @@ type UserService interface {
 	AddOne(ctx context.Context, in *ReqUserAdd, opts ...client.CallOption) (*ReplyUserLink, error)
 	GetOne(ctx context.Context, in *RequestInfo, opts ...client.CallOption) (*ReplyUserLink, error)
 	RemoveOne(ctx context.Context, in *RequestInfo, opts ...client.CallOption) (*ReplyInfo, error)
-	GetList(ctx context.Context, in *ReqUserList, opts ...client.CallOption) (*ReplyUserList, error)
+	GetList(ctx context.Context, in *RequestPage, opts ...client.CallOption) (*ReplyUserList, error)
 	IsPermission(ctx context.Context, in *ReqUserPermission, opts ...client.CallOption) (*ReplyUserPermission, error)
 	UpdateRoles(ctx context.Context, in *ReqUserLinks, opts ...client.CallOption) (*ReplyUserLinks, error)
 	UpdateStatus(ctx context.Context, in *ReqUserStatus, opts ...client.CallOption) (*ReplyInfo, error)
@@ -86,7 +86,7 @@ func (c *userService) RemoveOne(ctx context.Context, in *RequestInfo, opts ...cl
 	return out, nil
 }
 
-func (c *userService) GetList(ctx context.Context, in *ReqUserList, opts ...client.CallOption) (*ReplyUserList, error) {
+func (c *userService) GetList(ctx context.Context, in *RequestPage, opts ...client.CallOption) (*ReplyUserList, error) {
 	req := c.c.NewRequest(c.name, "UserService.GetList", in)
 	out := new(ReplyUserList)
 	err := c.c.Call(ctx, req, out, opts...)
@@ -142,7 +142,7 @@ type UserServiceHandler interface {
 	AddOne(context.Context, *ReqUserAdd, *ReplyUserLink) error
 	GetOne(context.Context, *RequestInfo, *ReplyUserLink) error
 	RemoveOne(context.Context, *RequestInfo, *ReplyInfo) error
-	GetList(context.Context, *ReqUserList, *ReplyUserList) error
+	GetList(context.Context, *RequestPage, *ReplyUserList) error
 	IsPermission(context.Context, *ReqUserPermission, *ReplyUserPermission) error
 	UpdateRoles(context.Context, *ReqUserLinks, *ReplyUserLinks) error
 	UpdateStatus(context.Context, *ReqUserStatus, *ReplyInfo) error
@@ -154,7 +154,7 @@ func RegisterUserServiceHandler(s server.Server, hdlr UserServiceHandler, opts .
 		AddOne(ctx context.Context, in *ReqUserAdd, out *ReplyUserLink) error
 		GetOne(ctx context.Context, in *RequestInfo, out *ReplyUserLink) error
 		RemoveOne(ctx context.Context, in *RequestInfo, out *ReplyInfo) error
-		GetList(ctx context.Context, in *ReqUserList, out *ReplyUserList) error
+		GetList(ctx context.Context, in *RequestPage, out *ReplyUserList) error
 		IsPermission(ctx context.Context, in *ReqUserPermission, out *ReplyUserPermission) error
 		UpdateRoles(ctx context.Context, in *ReqUserLinks, out *ReplyUserLinks) error
 		UpdateStatus(ctx context.Context, in *ReqUserStatus, out *ReplyInfo) error
@@ -183,7 +183,7 @@ func (h *userServiceHandler) RemoveOne(ctx context.Context, in *RequestInfo, out
 	return h.UserServiceHandler.RemoveOne(ctx, in, out)
 }
 
-func (h *userServiceHandler) GetList(ctx context.Context, in *ReqUserList, out *ReplyUserList) error {
+func (h *userServiceHandler) GetList(ctx context.Context, in *RequestPage, out *ReplyUserList) error {
 	return h.UserServiceHandler.GetList(ctx, in, out)
 }
 
