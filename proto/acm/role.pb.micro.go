@@ -37,7 +37,7 @@ type RoleService interface {
 	AddOne(ctx context.Context, in *ReqRoleAdd, opts ...client.CallOption) (*ReplyRoleInfo, error)
 	GetOne(ctx context.Context, in *RequestInfo, opts ...client.CallOption) (*ReplyRoleInfo, error)
 	RemoveOne(ctx context.Context, in *RequestInfo, opts ...client.CallOption) (*ReplyInfo, error)
-	GetAll(ctx context.Context, in *RequestInfo, opts ...client.CallOption) (*ReplyRoleList, error)
+	GetAll(ctx context.Context, in *RequestPage, opts ...client.CallOption) (*ReplyRoleList, error)
 	UpdateBase(ctx context.Context, in *ReqRoleUpdate, opts ...client.CallOption) (*ReplyRoleInfo, error)
 	AppendMenu(ctx context.Context, in *ReqRoleMenus, opts ...client.CallOption) (*ReplyRoleMenu, error)
 	SubtractMenu(ctx context.Context, in *ReqRoleMenus, opts ...client.CallOption) (*ReplyRoleMenu, error)
@@ -85,7 +85,7 @@ func (c *roleService) RemoveOne(ctx context.Context, in *RequestInfo, opts ...cl
 	return out, nil
 }
 
-func (c *roleService) GetAll(ctx context.Context, in *RequestInfo, opts ...client.CallOption) (*ReplyRoleList, error) {
+func (c *roleService) GetAll(ctx context.Context, in *RequestPage, opts ...client.CallOption) (*ReplyRoleList, error) {
 	req := c.c.NewRequest(c.name, "RoleService.GetAll", in)
 	out := new(ReplyRoleList)
 	err := c.c.Call(ctx, req, out, opts...)
@@ -131,7 +131,7 @@ type RoleServiceHandler interface {
 	AddOne(context.Context, *ReqRoleAdd, *ReplyRoleInfo) error
 	GetOne(context.Context, *RequestInfo, *ReplyRoleInfo) error
 	RemoveOne(context.Context, *RequestInfo, *ReplyInfo) error
-	GetAll(context.Context, *RequestInfo, *ReplyRoleList) error
+	GetAll(context.Context, *RequestPage, *ReplyRoleList) error
 	UpdateBase(context.Context, *ReqRoleUpdate, *ReplyRoleInfo) error
 	AppendMenu(context.Context, *ReqRoleMenus, *ReplyRoleMenu) error
 	SubtractMenu(context.Context, *ReqRoleMenus, *ReplyRoleMenu) error
@@ -142,7 +142,7 @@ func RegisterRoleServiceHandler(s server.Server, hdlr RoleServiceHandler, opts .
 		AddOne(ctx context.Context, in *ReqRoleAdd, out *ReplyRoleInfo) error
 		GetOne(ctx context.Context, in *RequestInfo, out *ReplyRoleInfo) error
 		RemoveOne(ctx context.Context, in *RequestInfo, out *ReplyInfo) error
-		GetAll(ctx context.Context, in *RequestInfo, out *ReplyRoleList) error
+		GetAll(ctx context.Context, in *RequestPage, out *ReplyRoleList) error
 		UpdateBase(ctx context.Context, in *ReqRoleUpdate, out *ReplyRoleInfo) error
 		AppendMenu(ctx context.Context, in *ReqRoleMenus, out *ReplyRoleMenu) error
 		SubtractMenu(ctx context.Context, in *ReqRoleMenus, out *ReplyRoleMenu) error
@@ -170,7 +170,7 @@ func (h *roleServiceHandler) RemoveOne(ctx context.Context, in *RequestInfo, out
 	return h.RoleServiceHandler.RemoveOne(ctx, in, out)
 }
 
-func (h *roleServiceHandler) GetAll(ctx context.Context, in *RequestInfo, out *ReplyRoleList) error {
+func (h *roleServiceHandler) GetAll(ctx context.Context, in *RequestPage, out *ReplyRoleList) error {
 	return h.RoleServiceHandler.GetAll(ctx, in, out)
 }
 

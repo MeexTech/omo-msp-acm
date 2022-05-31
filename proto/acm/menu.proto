@@ -8,7 +8,7 @@ service MenuService {
   rpc AddOne(ReqMenuAdd) returns (ReplyMenuInfo) {}
   rpc GetOne(RequestInfo) returns (ReplyMenuInfo) {}
   rpc RemoveOne(RequestInfo) returns (ReplyInfo) {}
-  rpc GetAll(RequestInfo) returns (ReplyMenuList) {}
+  rpc GetAll(RequestPage) returns (ReplyMenuList) {}
   rpc UpdateBase(ReqMenuUpdate) returns (ReplyMenuInfo) {}
 }
 

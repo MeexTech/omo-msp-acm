@@ -1,0 +1,53 @@
+syntax = "proto3";
+
+package omo.msp.acm;
+option go_package= "proto/acm;omo_msp_acm";
+import "proto/acm/common.proto";
+
+service ModuleService {
+  rpc AddOne(ReqModuleAdd) returns (ReplyModuleInfo) {}
+  rpc GetOne(RequestInfo) returns (ReplyModuleInfo) {}
+  rpc RemoveOne(RequestInfo) returns (ReplyInfo) {}
+  rpc GetAll(RequestPage) returns (ReplyModuleList) {}
+  rpc UpdateBase(ReqModuleUpdate) returns (ReplyInfo) {}
+  rpc UpdateMenus(RequestList) returns (ReplyList) {}
+}
+
+message ModuleInfo {
+  string uid = 1;
+  uint64 id = 2;
+  int64 created = 3;
+  int64 updated = 4;
+  string name = 5;
+  string remark = 6;
+  string creator = 7;
+  string operator = 8;
+  string owner = 9;
+  repeated string menus = 10;
+}
+
+message ReqModuleAdd {
+  string name = 1;
+  string remark = 2;
+  string operator = 3;
+  string owner = 4;
+  repeated string menus = 5;
+}
+
+message ReplyModuleInfo {
+  ModuleInfo info = 1;
+  ReplyStatus status = 2;
+}
+
+message ReplyModuleList {
+  int32 number = 1;
+  ReplyStatus status = 2;
+  repeated ModuleInfo list = 3;
+}
+
+message ReqModuleUpdate {
+  string uid = 1;
+  string name = 2;
+  string remark = 3;
+  string operator = 4;
+}

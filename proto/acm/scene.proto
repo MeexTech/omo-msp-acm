@@ -10,7 +10,7 @@ service SceneService {
   rpc RemoveOne(RequestInfo) returns (ReplyInfo) {}
   rpc GetList(RequestPage) returns (ReplySceneList) {}
   rpc UpdateStatus(ReqSceneStatus) returns (ReplyInfo) {}
-  rpc UpdateModules(ReqSceneLinks) returns (ReplySceneLink) {}
+  rpc UpdateModules(RequestList) returns (ReplyList) {}
 }
 
 message SceneLink {
@@ -53,10 +53,4 @@ message ReplySceneList {
   repeated SceneLink list = 4;
 }
 
-message ReqSceneLinks {
-  string uid = 1;
-  string scene = 2;
-  string operator = 3;
-  repeated string list = 4;
-}
 

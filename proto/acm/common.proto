@@ -25,3 +25,15 @@ message RequestPage{
   uint32 page = 3;
   uint32 type = 4;
 }
+
+message RequestList{
+  string uid = 1;
+  string operator = 2;
+  repeated string list = 3;
+}
+
+message ReplyList {
+  string uid = 1;
+  ReplyStatus status = 2;
+  repeated string list = 3;
+}

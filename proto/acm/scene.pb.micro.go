@@ -39,7 +39,7 @@ type SceneService interface {
 	RemoveOne(ctx context.Context, in *RequestInfo, opts ...client.CallOption) (*ReplyInfo, error)
 	GetList(ctx context.Context, in *RequestPage, opts ...client.CallOption) (*ReplySceneList, error)
 	UpdateStatus(ctx context.Context, in *ReqSceneStatus, opts ...client.CallOption) (*ReplyInfo, error)
-	UpdateModules(ctx context.Context, in *ReqSceneLinks, opts ...client.CallOption) (*ReplySceneLink, error)
+	UpdateModules(ctx context.Context, in *RequestList, opts ...client.CallOption) (*ReplyList, error)
 }
 
 type sceneService struct {
@@ -104,9 +104,9 @@ func (c *sceneService) UpdateStatus(ctx context.Context, in *ReqSceneStatus, opt
 	return out, nil
 }
 
-func (c *sceneService) UpdateModules(ctx context.Context, in *ReqSceneLinks, opts ...client.CallOption) (*ReplySceneLink, error) {
+func (c *sceneService) UpdateModules(ctx context.Context, in *RequestList, opts ...client.CallOption) (*ReplyList, error) {
 	req := c.c.NewRequest(c.name, "SceneService.UpdateModules", in)
-	out := new(ReplySceneLink)
+	out := new(ReplyList)
 	err := c.c.Call(ctx, req, out, opts...)
 	if err != nil {
 		return nil, err
@@ -122,7 +122,7 @@ type SceneServiceHandler interface {
 	RemoveOne(context.Context, *RequestInfo, *ReplyInfo) error
 	GetList(context.Context, *RequestPage, *ReplySceneList) error
 	UpdateStatus(context.Context, *ReqSceneStatus, *ReplyInfo) error
-	UpdateModules(context.Context, *ReqSceneLinks, *ReplySceneLink) error
+	UpdateModules(context.Context, *RequestList, *ReplyList) error
 }
 
 func RegisterSceneServiceHandler(s server.Server, hdlr SceneServiceHandler, opts ...server.HandlerOption) error {
@@ -132,7 +132,7 @@ func RegisterSceneServiceHandler(s server.Server, hdlr SceneServiceHandler, opts
 		RemoveOne(ctx context.Context, in *RequestInfo, out *ReplyInfo) error
 		GetList(ctx context.Context, in *RequestPage, out *ReplySceneList) error
 		UpdateStatus(ctx context.Context, in *ReqSceneStatus, out *ReplyInfo) error
-		UpdateModules(ctx context.Context, in *ReqSceneLinks, out *ReplySceneLink) error
+		UpdateModules(ctx context.Context, in *RequestList, out *ReplyList) error
 	}
 	type SceneService struct {
 		sceneService
@@ -165,6 +165,6 @@ func (h *sceneServiceHandler) UpdateStatus(ctx context.Context, in *ReqSceneStat
 	return h.SceneServiceHandler.UpdateStatus(ctx, in, out)
 }
 
-func (h *sceneServiceHandler) UpdateModules(ctx context.Context, in *ReqSceneLinks, out *ReplySceneLink) error {
+func (h *sceneServiceHandler) UpdateModules(ctx context.Context, in *RequestList, out *ReplyList) error {
 	return h.SceneServiceHandler.UpdateModules(ctx, in, out)
 }

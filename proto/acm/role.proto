@@ -8,7 +8,7 @@ service RoleService {
   rpc AddOne(ReqRoleAdd) returns (ReplyRoleInfo) {}
   rpc GetOne(RequestInfo) returns (ReplyRoleInfo) {}
   rpc RemoveOne(RequestInfo) returns (ReplyInfo) {}
-  rpc GetAll(RequestInfo) returns (ReplyRoleList) {}
+  rpc GetAll(RequestPage) returns (ReplyRoleList) {}
   rpc UpdateBase(ReqRoleUpdate) returns (ReplyRoleInfo) {}
   rpc AppendMenu(ReqRoleMenus) returns (ReplyRoleMenu) {}
   rpc SubtractMenu(ReqRoleMenus) returns (ReplyRoleMenu) {}

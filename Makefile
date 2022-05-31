@@ -6,3 +6,4 @@ proto:
 	protoc --proto_path=. --micro_out=. --go_out=. proto/acm/user.proto
 	protoc --proto_path=. --micro_out=. --go_out=. proto/acm/cata.proto
 	protoc --proto_path=. --micro_out=. --go_out=. proto/acm/scene.proto
+	protoc --proto_path=. --micro_out=. --go_out=. proto/acm/module.proto

@@ -37,7 +37,7 @@ type MenuService interface {
 	AddOne(ctx context.Context, in *ReqMenuAdd, opts ...client.CallOption) (*ReplyMenuInfo, error)
 	GetOne(ctx context.Context, in *RequestInfo, opts ...client.CallOption) (*ReplyMenuInfo, error)
 	RemoveOne(ctx context.Context, in *RequestInfo, opts ...client.CallOption) (*ReplyInfo, error)
-	GetAll(ctx context.Context, in *RequestInfo, opts ...client.CallOption) (*ReplyMenuList, error)
+	GetAll(ctx context.Context, in *RequestPage, opts ...client.CallOption) (*ReplyMenuList, error)
 	UpdateBase(ctx context.Context, in *ReqMenuUpdate, opts ...client.CallOption) (*ReplyMenuInfo, error)
 }
 
@@ -83,7 +83,7 @@ func (c *menuService) RemoveOne(ctx context.Context, in *RequestInfo, opts ...cl
 	return out, nil
 }
 
-func (c *menuService) GetAll(ctx context.Context, in *RequestInfo, opts ...client.CallOption) (*ReplyMenuList, error) {
+func (c *menuService) GetAll(ctx context.Context, in *RequestPage, opts ...client.CallOption) (*ReplyMenuList, error) {
 	req := c.c.NewRequest(c.name, "MenuService.GetAll", in)
 	out := new(ReplyMenuList)
 	err := c.c.Call(ctx, req, out, opts...)
@@ -109,7 +109,7 @@ type MenuServiceHandler interface {
 	AddOne(context.Context, *ReqMenuAdd, *ReplyMenuInfo) error
 	GetOne(context.Context, *RequestInfo, *ReplyMenuInfo) error
 	RemoveOne(context.Context, *RequestInfo, *ReplyInfo) error
-	GetAll(context.Context, *RequestInfo, *ReplyMenuList) error
+	GetAll(context.Context, *RequestPage, *ReplyMenuList) error
 	UpdateBase(context.Context, *ReqMenuUpdate, *ReplyMenuInfo) error
 }
 
@@ -118,7 +118,7 @@ func RegisterMenuServiceHandler(s server.Server, hdlr MenuServiceHandler, opts .
 		AddOne(ctx context.Context, in *ReqMenuAdd, out *ReplyMenuInfo) error
 		GetOne(ctx context.Context, in *RequestInfo, out *ReplyMenuInfo) error
 		RemoveOne(ctx context.Context, in *RequestInfo, out *ReplyInfo) error
-		GetAll(ctx context.Context, in *RequestInfo, out *ReplyMenuList) error
+		GetAll(ctx context.Context, in *RequestPage, out *ReplyMenuList) error
 		UpdateBase(ctx context.Context, in *ReqMenuUpdate, out *ReplyMenuInfo) error
 	}
 	type MenuService struct {
@@ -144,7 +144,7 @@ func (h *menuServiceHandler) RemoveOne(ctx context.Context, in *RequestInfo, out
 	return h.MenuServiceHandler.RemoveOne(ctx, in, out)
 }
 
-func (h *menuServiceHandler) GetAll(ctx context.Context, in *RequestInfo, out *ReplyMenuList) error {
+func (h *menuServiceHandler) GetAll(ctx context.Context, in *RequestPage, out *ReplyMenuList) error {
 	return h.MenuServiceHandler.GetAll(ctx, in, out)
 }
 
