@@ -22,7 +22,7 @@ message ModuleInfo {
   string remark = 6;
   string creator = 7;
   string operator = 8;
-  string owner = 9;
+  uint32 type = 9;
   repeated string menus = 10;
 }
 
@@ -30,8 +30,7 @@ message ReqModuleAdd {
   string name = 1;
   string remark = 2;
   string operator = 3;
-  string owner = 4;
-  repeated string menus = 5;
+  uint32 type = 4;
 }
 
 message ReplyModuleInfo {
