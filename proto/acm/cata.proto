@@ -23,6 +23,7 @@ message CatalogInfo {
   string remark = 8;
   string key = 9;
   uint32 type = 10;
+  repeated string concepts = 21;
 }
 
 message ReqCatalogAdd {
@@ -50,4 +51,5 @@ message ReqCatalogUpdate {
   string remark = 3;
   string operator = 4;
   string key = 5;
+  repeated string concepts = 6;
 }
