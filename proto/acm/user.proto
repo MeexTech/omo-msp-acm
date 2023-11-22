@@ -40,6 +40,7 @@ message ReqUserAdd {
   string operator = 3;
   string owner = 4;
   string remark = 7;
+  string name = 8;
   repeated string roles = 5;
   repeated string links = 6;
 }
