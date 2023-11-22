@@ -26,6 +26,24 @@ message RequestPage{
   uint32 type = 4;
 }
 
+message RequestFilter {
+  string owner = 1;
+  string key = 2;
+  string value = 3;
+  uint32 page = 4;
+  uint32 number = 5;
+  repeated string values = 21;
+  repeated int64 numbers = 22;
+}
+
+message RequestUpdate{
+  string uid = 1;
+  string field = 2;
+  string value = 3;
+  string operator = 4;
+  repeated string values = 10;
+}
+
 message RequestList{
   string uid = 1;
   string operator = 2;

@@ -42,6 +42,8 @@ type UserService interface {
 	UpdateRoles(ctx context.Context, in *ReqUserLinks, opts ...client.CallOption) (*ReplyUserLinks, error)
 	UpdateStatus(ctx context.Context, in *ReqUserStatus, opts ...client.CallOption) (*ReplyInfo, error)
 	UpdateLinks(ctx context.Context, in *ReqUserLinks, opts ...client.CallOption) (*ReplyUserLinks, error)
+	UpdateByFilter(ctx context.Context, in *RequestUpdate, opts ...client.CallOption) (*ReplyUserLink, error)
+	GetByFilter(ctx context.Context, in *RequestFilter, opts ...client.CallOption) (*ReplyUserLinks, error)
 }
 
 type userService struct {
@@ -136,6 +138,26 @@ func (c *userService) UpdateLinks(ctx context.Context, in *ReqUserLinks, opts ..
 	return out, nil
 }
 
+func (c *userService) UpdateByFilter(ctx context.Context, in *RequestUpdate, opts ...client.CallOption) (*ReplyUserLink, error) {
+	req := c.c.NewRequest(c.name, "UserService.UpdateByFilter", in)
+	out := new(ReplyUserLink)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *userService) GetByFilter(ctx context.Context, in *RequestFilter, opts ...client.CallOption) (*ReplyUserLinks, error) {
+	req := c.c.NewRequest(c.name, "UserService.GetByFilter", in)
+	out := new(ReplyUserLinks)
+	err := c.c.Call(ctx, req, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // Server API for UserService service
 
 type UserServiceHandler interface {
@@ -147,6 +169,8 @@ type UserServiceHandler interface {
 	UpdateRoles(context.Context, *ReqUserLinks, *ReplyUserLinks) error
 	UpdateStatus(context.Context, *ReqUserStatus, *ReplyInfo) error
 	UpdateLinks(context.Context, *ReqUserLinks, *ReplyUserLinks) error
+	UpdateByFilter(context.Context, *RequestUpdate, *ReplyUserLink) error
+	GetByFilter(context.Context, *RequestFilter, *ReplyUserLinks) error
 }
 
 func RegisterUserServiceHandler(s server.Server, hdlr UserServiceHandler, opts ...server.HandlerOption) error {
@@ -159,6 +183,8 @@ func RegisterUserServiceHandler(s server.Server, hdlr UserServiceHandler, opts .
 		UpdateRoles(ctx context.Context, in *ReqUserLinks, out *ReplyUserLinks) error
 		UpdateStatus(ctx context.Context, in *ReqUserStatus, out *ReplyInfo) error
 		UpdateLinks(ctx context.Context, in *ReqUserLinks, out *ReplyUserLinks) error
+		UpdateByFilter(ctx context.Context, in *RequestUpdate, out *ReplyUserLink) error
+		GetByFilter(ctx context.Context, in *RequestFilter, out *ReplyUserLinks) error
 	}
 	type UserService struct {
 		userService
@@ -201,4 +227,12 @@ func (h *userServiceHandler) UpdateStatus(ctx context.Context, in *ReqUserStatus
 
 func (h *userServiceHandler) UpdateLinks(ctx context.Context, in *ReqUserLinks, out *ReplyUserLinks) error {
 	return h.UserServiceHandler.UpdateLinks(ctx, in, out)
+}
+
+func (h *userServiceHandler) UpdateByFilter(ctx context.Context, in *RequestUpdate, out *ReplyUserLink) error {
+	return h.UserServiceHandler.UpdateByFilter(ctx, in, out)
+}
+
+func (h *userServiceHandler) GetByFilter(ctx context.Context, in *RequestFilter, out *ReplyUserLinks) error {
+	return h.UserServiceHandler.GetByFilter(ctx, in, out)
 }
