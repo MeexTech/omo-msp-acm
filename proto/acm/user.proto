@@ -41,6 +41,7 @@ message ReqUserAdd {
   string owner = 4;
   string remark = 7;
   string name = 8;
+  uint32 status = 9;
   repeated string roles = 5;
   repeated string links = 6;
 }
