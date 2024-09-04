@@ -30,6 +30,7 @@ message UserLink {
   string owner = 10;
   uint32 status = 11;
   string remark = 14;
+  string cover = 15;
   repeated string roles = 12;
   repeated string links = 13;
 }
@@ -42,6 +43,7 @@ message ReqUserAdd {
   string remark = 7;
   string name = 8;
   uint32 status = 9;
+  string cover = 10;
   repeated string roles = 5;
   repeated string links = 6;
 }
